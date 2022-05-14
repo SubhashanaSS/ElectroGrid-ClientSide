@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -74,6 +75,47 @@ public class Customer {
 					output += "</table>";
 				} catch (Exception e) {
 					output = "Error while reading the Customer Details.";
+					System.err.println(e.getMessage());
+				}
+
+				return output;
+			}
+			
+			// Insert Customer
+			public String insertCustomer(String CustomerName, String CustomerAddress, String CustomerEmail,
+					String CustomerContact) {
+				String output = "";
+
+				try {
+					Connection con = connect();
+
+					if (con == null) {
+						return "Error while connecting to the database";
+					}
+
+					// create a prepared statement
+					String query = " insert into customer (`CustomerID`,`CustomerName`,`CustomerAddress`,`CustomerEmail`,`CustomerContact`)"
+							+ " values (?, ?, ?, ?, ?)";
+
+					PreparedStatement preparedStmt = con.prepareStatement(query);
+
+					// binding values
+					preparedStmt.setInt(1, 0);
+					preparedStmt.setString(2, CustomerName);
+					preparedStmt.setString(3, CustomerAddress);
+					preparedStmt.setString(4, CustomerEmail);
+					preparedStmt.setString(5, CustomerContact);
+
+					// execute the statement
+					preparedStmt.execute();
+					con.close();
+
+					// Create JSON Object to show successful msg.
+					String newCustomer = readCustomer();
+					output = "{\"status\":\"success\", \"data\": \"" + newCustomer + "\"}";
+				} catch (Exception e) {
+					// Create JSON Object to show Error msg.
+					output = "{\"status\":\"error\", \"data\": \"Error while Inserting Customer.\"}";
 					System.err.println(e.getMessage());
 				}
 
