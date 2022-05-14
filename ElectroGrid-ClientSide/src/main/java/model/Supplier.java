@@ -119,4 +119,43 @@ public class Supplier {
 
 				return output;
 			}
+			
+			// Update Customer Details
+			public String updateSupplier(String SupplierID, String SupplierName, String SupplySize, String EnergyType,
+					String SupplierStatus) {
+				String output = "";
+
+				try {
+					Connection con = connect();
+
+					if (con == null) {
+						return "Error while connecting to the database for updating.";
+					}
+
+					// create a prepared statement
+					String query = "UPDATE supplier SET SupplierName=?,SupplySize=?,EnergyType=?,SupplierStatus=? WHERE SupplierID=?";
+
+					PreparedStatement preparedStmt = con.prepareStatement(query);
+
+					// binding values
+					preparedStmt.setString(1, SupplierName);
+					preparedStmt.setString(2, SupplySize);
+					preparedStmt.setString(3, EnergyType);
+					preparedStmt.setInt(4, Integer.parseInt(SupplierStatus));
+					preparedStmt.setInt(5, Integer.parseInt(SupplierID));
+
+					// execute the statement
+					preparedStmt.execute();
+					con.close();
+
+					// create JSON object to show successful msg
+					String newSupplier = readSupplier();
+					output = "{\"status\":\"success\", \"data\": \"" + newSupplier + "\"}";
+				} catch (Exception e) {
+					output = "{\"status\":\"error\", \"data\": \"Error while Updating Supplier Details.\"}";
+					System.err.println(e.getMessage());
+				}
+
+				return output;
+			}
 }
