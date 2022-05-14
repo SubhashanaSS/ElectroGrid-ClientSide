@@ -121,5 +121,44 @@ public class Customer {
 
 				return output;
 			}
+			
+			// Update Customer
+			public String updateCustomer(String CustomerID, String CustomerName, String CustomerAddress, String CustomerEmail,
+					String CustomerContact) {
+				String output = "";
+
+				try {
+					Connection con = connect();
+
+					if (con == null) {
+						return "Error while connecting to the database for updating.";
+					}
+
+					// create a prepared statement
+					String query = "update customer SET CustomerName=?,CustomerAddress=?,CustomerEmail=?,CustomerContact=? WHERE CustomerID=?";
+
+					PreparedStatement preparedStmt = con.prepareStatement(query);
+
+					// binding values
+					preparedStmt.setString(1, CustomerName);
+					preparedStmt.setString(2, CustomerAddress);
+					preparedStmt.setString(3, CustomerEmail);
+					preparedStmt.setInt(4, Integer.parseInt(CustomerContact));
+					preparedStmt.setInt(5, Integer.parseInt(CustomerID));
+
+					// execute the statement
+					preparedStmt.execute();
+					con.close();
+
+					// create JSON object to show successful msg
+					String newCustomer = readCustomer();
+					output = "{\"status\":\"success\", \"data\": \"" + newCustomer + "\"}";
+				} catch (Exception e) {
+					output = "{\"status\":\"error\", \"data\": \"Error while Updating Customer Details.\"}";
+					System.err.println(e.getMessage());
+				}
+
+				return output;
+			}
 
 }
