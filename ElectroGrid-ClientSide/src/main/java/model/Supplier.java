@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -73,6 +74,46 @@ public class Supplier {
 					output += "</table>";
 				} catch (Exception e) {
 					output = "Error while reading the Supplier Details.";
+					System.err.println(e.getMessage());
+				}
+
+				return output;
+			}
+			
+			// Insert 
+			public String insertSupplier(String SupplierName, String SupplySize, String EnergyType, String SupplierStatus) {
+				String output = "";
+
+				try {
+					Connection con = connect();
+
+					if (con == null) {
+						return "Error while connecting to the database";
+					}
+
+					// create a prepared statement
+					String query = " insert into supplier (`SupplierID`,`SupplierName`,`SupplySize`,`EnergyType`,`SupplierStatus`)"
+							+ " values (?, ?, ?, ?, ?)";
+
+					PreparedStatement preparedStmt = con.prepareStatement(query);
+
+					// binding values
+					preparedStmt.setInt(1, 0);
+					preparedStmt.setString(2, SupplierName);
+					preparedStmt.setString(3, SupplySize);
+					preparedStmt.setString(4, EnergyType);
+					preparedStmt.setString(5, SupplierStatus);
+
+					// execute the statement
+					preparedStmt.execute();
+					con.close();
+
+					// Create JSON Object to show successful msg.
+					String newSupplier = readSupplier();
+					output = "{\"status\":\"success\", \"data\": \"" + newSupplier + "\"}";
+				} catch (Exception e) {
+					// Create JSON Object to show Error msg.
+					output = "{\"status\":\"error\", \"data\": \"Error while Inserting Supplier.\"}";
 					System.err.println(e.getMessage());
 				}
 
