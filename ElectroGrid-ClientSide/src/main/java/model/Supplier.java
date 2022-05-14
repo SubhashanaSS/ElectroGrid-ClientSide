@@ -158,4 +158,38 @@ public class Supplier {
 
 				return output;
 			}
+			
+			public String deleteSupplier(String SupplierID) {
+				String output = "";
+
+				try {
+					Connection con = connect();
+
+					if (con == null) {
+						return "Error while connecting to the database for deleting.";
+					}
+
+					// create a prepared statement
+					String query = "DELETE FROM supplier WHERE SupplierID=?";
+
+					PreparedStatement preparedStmt = con.prepareStatement(query);
+
+					// binding values
+					preparedStmt.setInt(1, Integer.parseInt(SupplierID));
+					// execute the statement
+					preparedStmt.execute();
+					con.close();
+
+					// create JSON Object
+					String newSupplier = readSupplier();
+					output = "{\"status\":\"success\", \"data\": \"" + newSupplier + "\"}";
+				} catch (Exception e) {
+					// Create JSON object
+					output = "{\"status\":\"error\", \"data\": \"Error while Deleting Supplier.\"}";
+					System.err.println(e.getMessage());
+
+				}
+
+				return output;
+			}
 }
