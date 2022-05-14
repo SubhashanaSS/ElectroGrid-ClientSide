@@ -160,5 +160,40 @@ public class Customer {
 
 				return output;
 			}
+			
+			//Delete Customer
+			public String deleteCustomer(String CustomerID) {
+				String output = "";
+
+				try {
+					Connection con = connect();
+
+					if (con == null) {
+						return "Error while connecting to the database for deleting.";
+					}
+
+					// create a prepared statement
+					String query = "DELETE FROM customer WHERE CustomerID=?";
+
+					PreparedStatement preparedStmt = con.prepareStatement(query);
+
+					// binding values
+					preparedStmt.setInt(1, Integer.parseInt(CustomerID));
+					// execute the statement
+					preparedStmt.execute();
+					con.close();
+
+					// create JSON Object
+					String newCustomer = readCustomer();
+					output = "{\"status\":\"success\", \"data\": \"" + newCustomer + "\"}";
+				} catch (Exception e) {
+					// Create JSON object
+					output = "{\"status\":\"error\", \"data\": \"Error while Deleting Customer.\"}";
+					System.err.println(e.getMessage());
+
+				}
+
+				return output;
+			}
 
 }
