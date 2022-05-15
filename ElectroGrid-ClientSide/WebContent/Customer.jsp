@@ -79,6 +79,7 @@
                     <hr>
                     <div class="container text-left">
                         
+			    <a href="Index.jsp" class="btn btn-success"style="background-color: #5353ff">Navigate To Home page</a>
                     </div>
                     <br>
                 
@@ -90,7 +91,7 @@
 				
 					<br>
 					<br>
-					 <a href="Login.jsp" class="btn btn-success"style="background-color: 	#5353ff">Logout</a>
+					 
 				</div> 
                    
                 </div>
@@ -123,8 +124,8 @@
           <div class="col-xs-6 col-md-3">
             <h6>Quick Links</h6>
             <ul class="footer-links">
-              <li><a href="Login.jsp">Customer Management</a></li>
-              <li><a href="Login.jsp">Supplier Management</a></li>
+              <li><a href="Index.jsp">Customer Management</a></li>
+              <li><a href="Index.jsp">Supplier Management</a></li>
             </ul>
           </div>
         </div>
