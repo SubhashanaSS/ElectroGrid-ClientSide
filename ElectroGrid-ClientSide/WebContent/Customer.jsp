@@ -114,7 +114,7 @@
           <div class="col-xs-6 col-md-3">
             <h6>Categories</h6>
             <ul class="footer-links">
-              <li><a href="Login.jsp">Home Page</a></li>
+              <li><a href="Index.jsp">Home Page</a></li>
               <li><a href="">Contact Us</a></li>
               <li><a href="">Contribute</a></li>
               
