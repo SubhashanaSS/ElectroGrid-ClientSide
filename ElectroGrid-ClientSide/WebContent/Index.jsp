@@ -40,7 +40,5 @@
 </div>
 </div>
 
-<a href="Login.jsp" button type="button" class="btn btn-primary btn-lg"background-color: #5353ff">Logout</button></a>
-
 </body>
 </html>
