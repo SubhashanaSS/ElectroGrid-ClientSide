@@ -78,8 +78,6 @@
                     <h3 class="text-center">Customer Details</h3>
                     <hr>
                     <div class="container text-left">
-
-                        <a href="Index.jsp" class="btn btn-success"style="background-color: #5353ff">Navigate To Home page</a>
                         
                     </div>
                     <br>
