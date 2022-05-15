@@ -8,7 +8,7 @@
                    
 
                     <ul class="navbar-nav">
-                        <li><a href="Login.jsp" class="nav-link"><h5>ElectroGrid</h5></a></li>
+                        <li><a href="#" class="nav-link"><h5>ElectroGrid</h5></a></li>
                     </ul>
                 </nav>
 
